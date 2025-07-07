@@ -13,7 +13,7 @@ export default function Dashboard() {
                     <button className='text-gray-700 hover:text-blue-500 block' onClick={() => router.push('/dashboard')}>
                         Home
                     </button>
-                    <button className='text-gray-700 hover:text-blue-500 block' onClick={() => router.push('/dashboard/info')}>
+                    <button className='text-gray-700 hover:text-blue-500 block' onClick={() => router.push('/dashboard/userinfo')}>
                         User Information
                     </button>
                     <button className='text-gray-700 hover:text-blue-500 block' onClick={() => router.push('/welcome/signin')}>
@@ -21,6 +21,11 @@ export default function Dashboard() {
                     </button>
                 </nav>
             </aside>
+            <main className='flex-1 p-8'>
+                <h2 className='text-3xl font-semibold text-gray-800 mb-4 text-center'>
+                    WELCOME
+                </h2>
+            </main>
         </div>
     );
 }

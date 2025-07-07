@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { Button } from './components';
 
 export default function Home() {
   const router = useRouter();
@@ -11,9 +12,17 @@ export default function Home() {
     <div className="w-screen h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url('/bg.jpg')` }}>
       <div className='mb-4'>
-        <button type='submit' onClick={handleStart} className=' bg-blue-300 text-black p-2 rounded w-full max-w-
-      hover:bg-blue-600 transition duration-200'>START</button>
-        </div>
+        <Button variants="secondary" onclick={handleStart}>START</Button>
+        <Button variants="danger" onclick={handleStart}>
+          click here
+        </Button>
+        <Button variants="primary" onclick={handleStart}>
+          watdahil
+        </Button>
+      </div>
+      <div className='flex flex-col gap-4 justify-center items-center'>
+        
+      </div>
     </div>
   );
 }
