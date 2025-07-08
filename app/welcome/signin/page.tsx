@@ -46,12 +46,12 @@ export default function SignInPage() {
                         <input type='password' id='password' name='password' placeholder='Enter your password' required
                         onChange={handlePassword} className='border border-gray-300 p-2 rounded w-full max-w-s'></input> 
                     </div>
-                    <div className='mb-4'>
-                        <button type='submit' className=' bg-blue-300 text-black p-2 rounded w-full max-w-s
+                    <div className='mb-4 flex justify-center'>
+                        <button type='submit' className=' bg-blue-300 text-black p-2 rounded-4xl w-3xs max-w-s
                         hover:bg-blue-600 transition duration-200'>Login</button>
                     </div>
                     <div className='text-center'>
-                        <span className='text-sm'>Don't have an account?</span>
+                        <span className='text-sm'>Dont have an account?</span>
                         <button type='button' onClick={handleSignUp} className='text-blue-500 hover:underline ml-1'>signup</button>
                     </div>
                 </form>

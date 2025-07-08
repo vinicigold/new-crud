@@ -6,6 +6,10 @@ export default function UserInfo() {
 
     const router = useRouter();
 
+    const handleAddUser = () => {
+        router.push('/dashboard/userinfo/adduser');
+    };
+
     const dummyData = [
         { firstName: 'John', lastName: 'Dutton', age: 30, phone: '09123456789' },
         { firstName: 'Jane', lastName: 'Doe', age: 25, phone: '09123456788' },
@@ -33,7 +37,7 @@ export default function UserInfo() {
             <main className='flex-1 p-8'>
                 <h2 className='text-3xl font-semibold text-gray-800 mb-4 text-center'>USER INFORMATION</h2>
                 <div className='flex justify-center items-center mb-4'>
-                    <button className='text-black hover:bg-blue-500 mb-4 rounded bg-blue-300 p-2'>ADD USER
+                    <button className='text-black hover:bg-blue-500 mb-4 rounded bg-blue-300 p-2' onClick={handleAddUser}>ADD USER
                     </button>
                 </div>
                 <div className="overflow-x-auto"> 
