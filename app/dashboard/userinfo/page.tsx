@@ -1,22 +1,46 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function UserInfo() {
 
     const router = useRouter();
+    const [userinfo, setuserinfo ] = useState<User[]>([])
 
     const handleAddUser = () => {
         router.push('/dashboard/userinfo/adduser');
     };
 
-    const dummyData = [
-        { firstName: 'John', lastName: 'Dutton', age: 30, phone: '09123456789' },
-        { firstName: 'Jane', lastName: 'Doe', age: 25, phone: '09123456788' },
-        { firstName: 'Alice', lastName: 'Smith', age: 28, phone: '09123456787' },
-        { firstName: 'Bob', lastName: 'Johnson', age: 35, phone: '09123456786' },
-        { firstName: 'Charlie', lastName: 'Brown', age: 22, phone: '09123456785' },
-        { firstName: 'David', lastName: 'Wilson', age: 40, phone: '09123456784' },]
+    type User = {
+        id: number
+        firstname:string
+        lastname:string
+        age:number
+        phone:number
+    }
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await fetch('http://localhost:3002/users')
+                const data = await response.json()
+                setuserinfo(data)
+            }
+            catch(error){
+                console.error('error', error)
+            }
+        }
+
+        fetchUsers()
+    },[])
+
+    // const dummyData = [
+    //     { firstName: 'John', lastName: 'Dutton', age: 30, phone: '09123456789' },
+    //     { firstName: 'Jane', lastName: 'Doe', age: 25, phone: '09123456788' },
+    //     { firstName: 'Alice', lastName: 'Smith', age: 28, phone: '09123456787' },
+    //     { firstName: 'Bob', lastName: 'Johnson', age: 35, phone: '09123456786' },
+    //     { firstName: 'Charlie', lastName: 'Brown', age: 22, phone: '09123456785' },
+    //     { firstName: 'David', lastName: 'Wilson', age: 40, phone: '09123456784' },]
 
     return(
         <div className="min-h-screen flex bg-gray-100">
@@ -29,7 +53,7 @@ export default function UserInfo() {
                     <button className='text-gray-700 hover:text-blue-500 block' onClick={() => router.push('/dashboard/userinfo')}>
                         User Information
                     </button>
-                    <button className='text-gray-700 hover:text-blue-500 block' onClick={() => router.push('/welcome/signin')}>
+                    <button className='text-red-500 hover:text-blue-500 block' onClick={() => router.push('/welcome/signin')}>
                         Logout
                     </button>
                 </nav>
@@ -52,10 +76,10 @@ export default function UserInfo() {
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
-                            {dummyData.map((user,i) => (
-                                <tr key={i}>
-                                    <td className="px-4 py-2 text-sm text-gray-700">{user.firstName}</td>
-                                    <td className="px-4 py-2 text-sm text-gray-700">{user.lastName}</td>
+                            {userinfo.map((user: User) => (
+                                <tr key={user.id}>
+                                    <td className="px-4 py-2 text-sm text-gray-700">{user.firstname}</td>
+                                    <td className="px-4 py-2 text-sm text-gray-700">{user.lastname}</td>
                                     <td className="px-4 py-2 text-sm text-gray-700">{user.age}</td>
                                     <td className="px-4 py-2 text-sm text-gray-700">{user.phone}</td>
                                     <td className="px-4 py-2">

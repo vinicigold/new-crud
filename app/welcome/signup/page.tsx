@@ -13,7 +13,7 @@ export default function SignUpPage() {
         router.push('/welcome/signin');
     };
     return (
-        <div className="w-screen h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat"
+        <div className="w-screen h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat" 
         style={{ backgroundImage: `url('/bg.jpg')` }}>
             <div className='mb-4'>
                 <Form onBack={backBtn} button='Sign Up' onPress={onPress} header='Sign Up'>
