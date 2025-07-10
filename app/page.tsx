@@ -13,12 +13,10 @@ export default function Home() {
     <div className="w-screen h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url('/bg.jpg')` }}>
       <div className='mb-4'>
-        <Button variants="secondary" onclick={handleStart}>START</Button>
-        <Button variants="danger" onclick={handleStart}>
-          click here
+        <Button button='START' variants="secondary" onClick={handleStart}></Button>
+        <Button button='click here' variants="danger" onClick={handleStart}>
         </Button>
-        <Button variants="primary" onclick={handleStart}>
-          watdahil
+        <Button button='watdahil' variants="primary" onClick={handleStart}>
         </Button>
       </div>
       <div className='mb-4'>
