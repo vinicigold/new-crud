@@ -35,7 +35,7 @@ export default function SignInPage() {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await fetch('http://localhost:3002/users')
+                const response = await fetch('http://localhost:3002/getusers')
                 const data = await response.json()
                 setuserinfo(data)
             }

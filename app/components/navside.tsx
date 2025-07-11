@@ -11,7 +11,7 @@ const Nav: React.FC<NavProps> = ({header}: NavProps) => {
     const router = useRouter();
 
     return(
-        <div className="min-h-screen flex bg-gray-100">
+        <div className="min-h-screen flex">
             <aside className="w-64 bg-white shadow-md px-4 py-6">
                 <h2 className="text-xl font-bold mb-6">{header}</h2>
                 <nav className="space-y-4">

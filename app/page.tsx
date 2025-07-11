@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation';
 import Button from './components/button';
 
 export default function Home() {
-  const router = useRouter();
+  const router = useRouter()
   const handleStart = () => {
-        router.push('/welcome/signin');
-  };
+        router.push('/welcome/signin')
+  }
 
   return (
     <div className="w-screen h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat"
@@ -24,5 +24,5 @@ export default function Home() {
       <div className='flex flex-col gap-4 justify-center items-center'>
       </div>
     </div>
-  );
+  )
 }

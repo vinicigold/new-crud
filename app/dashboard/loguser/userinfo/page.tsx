@@ -23,7 +23,7 @@ export default function UserInfo() {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await fetch('http://localhost:3002/users')
+                const response = await fetch('http://localhost:3002/getusers')
                 const data = await response.json()
                 setuserinfo(data)
             }
@@ -37,7 +37,7 @@ export default function UserInfo() {
 
     const deleteuser = async (user: User) => {
         try{
-            const res = await fetch('http://localhost:3002/user',{
+            const res = await fetch('http://localhost:3002/deluser',{
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json'},
                 body: JSON.stringify(user),
