@@ -1,36 +1,54 @@
 import React from "react";
 import { useRouter } from 'next/navigation';
 
-
 interface NavProps {
-    header:string
+    header: string;
+    isOpen: boolean;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Nav: React.FC<NavProps> = ({header}: NavProps) => {
-
+const Nav: React.FC<NavProps> = ({ header, isOpen, setIsOpen }) => {
     const router = useRouter();
 
-    return(
-        <div className="min-h-screen flex">
-            <aside className="w-64 bg-white shadow-md px-4 py-6">
-                <h2 className="text-xl font-bold mb-6">{header}</h2>
-                <nav className="space-y-4">
-                    <button className='text-gray-700 hover:text-blue-500 block' onClick={() => router.push('/dashboard')}>
-                        Home
-                    </button>
-                    <button className='text-gray-700 hover:text-blue-500 block' onClick={() => router.push('/dashboard/loguser')}>
-                        User Information
-                    </button>
-                    <button className='text-gray-700 hover:text-blue-500 block' onClick={() => router.push('/dashboard/employee')}>
-                        Employee
-                    </button>
-                    <button className='text-red-500 hover:text-blue-500 block' onClick={() => router.push('/welcome/signin')}>
-                        Logout
-                    </button>
-                </nav>
-            </aside>
+    const navigate = (path: string) => {
+        router.push(path);
+        setIsOpen(false);
+    };
+
+    return (
+        <div className="relative" style={{background: '#126544'}}>
+            {!isOpen && (
+                <div 
+                    onMouseEnter={() => setIsOpen(true)}
+                    className="p-2 m-4 w-10 h-10 flex flex-col justify-between items-center text-black rounded cursor-pointer z-20"
+                >
+                    <span className="block w-6 h-0.5 bg-white"></span>
+                    <span className="block w-6 h-0.5 bg-white"></span>
+                    <span className="block w-6 h-0.5 bg-white"></span>
+                </div>
+            )}
+
+            {isOpen && (
+                <div
+                    onMouseLeave={() => setIsOpen(false)}
+                    style={{background: '#126544'}} className="fixed left-0 top-0 w-64 h-full bg-white shadow-md px-4 py-6 z-10"
+                >
+                    <h2 className="text-xl font-bold mb-6 text-[#ffffff]">{header}</h2>
+                    <nav className="space-y-4">
+                        <button className="text-[#e5e7eb] hover:text-[#0e3618] block" onClick={() => navigate('/dashboard')}>
+                            Home
+                        </button>
+                        <button className="text-[#e5e7eb] hover:text-[#0e3618] block" onClick={() => navigate('/dashboard/employee')}>
+                            Employee
+                        </button>
+                        <button className="text-[#dc2626] hover:text-[#0e3618]   block" onClick={() => navigate('/welcome/signin')}>
+                            Logout
+                        </button>
+                    </nav>
+                </div>
+            )}
         </div>
-    )
-}
+    );
+};
 
 export default Nav;

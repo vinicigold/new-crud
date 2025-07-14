@@ -11,7 +11,7 @@ export default function Home() {
 
   return (
     <div className="w-screen h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url('/bg.jpg')` }}>
+        style={{ backgroundImage: `url('/backtest.jpg')` }}>
       <div className='mb-4'>
         <Button button='START' variants="secondary" onClick={handleStart}></Button>
         <Button button='click here' variants="danger" onClick={handleStart}>
