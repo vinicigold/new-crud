@@ -18,18 +18,17 @@ const Nav: React.FC<NavProps> = ({ header, isOpen, setIsOpen }) => {
     return (
         <div className="relative" style={{background: '#126544'}}>
             {!isOpen && (
-                <div 
+                <aside 
                     onMouseEnter={() => setIsOpen(true)}
                     className="p-2 m-4 w-10 h-10 flex flex-col justify-between items-center text-black rounded cursor-pointer z-20"
                 >
                     <span className="block w-6 h-0.5 bg-white"></span>
                     <span className="block w-6 h-0.5 bg-white"></span>
                     <span className="block w-6 h-0.5 bg-white"></span>
-                </div>
+                </aside>
             )}
-
             {isOpen && (
-                <div
+                <aside
                     onMouseLeave={() => setIsOpen(false)}
                     style={{background: '#126544'}} className="fixed left-0 top-0 w-64 h-full bg-white shadow-md px-4 py-6 z-10"
                 >
@@ -45,7 +44,7 @@ const Nav: React.FC<NavProps> = ({ header, isOpen, setIsOpen }) => {
                             Logout
                         </button>
                     </nav>
-                </div>
+                </aside>
             )}
         </div>
     );

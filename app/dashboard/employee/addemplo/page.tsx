@@ -54,11 +54,9 @@ export default function AddEmployee() {
   }
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-cover bg-center bg-no-repeat bg-[#12664F]"
-      
-    >
+    <div className="min-h-screen w-full flex items-center justify-center bg-cover bg-center bg-no-repeat bg-[#12664F]">
         <form className="w-full max-w-md bg-white p-6 rounded-lg shadow-md border bg-opacity-90 border-[#12664F]" onSubmit={onPress}>
-                <div className='mb-4 flex items-center justify-between'>
+            <div className='mb-4 flex items-center justify-between'>
                     <button type='button' onClick={backBtn} className='hover:underline mb-4'>
                         ←
                     </button>
@@ -102,8 +100,8 @@ export default function AddEmployee() {
                     <button type='submit' className=' bg-[#12664F] text-white p-2 rounded-4xl w-full max-w-s
                     hover:bg-[#0f4c3a] transition duration-200'>SUBMIT
                 </button>
-                </div> 
-            </form>
+            </div> 
+        </form>
     </div>
   )
 }

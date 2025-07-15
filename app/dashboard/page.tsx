@@ -25,7 +25,7 @@ export default function Dashboard() {
         <div className="min-h-screen flex bg-[#f4f6f7]">
             <Nav header="HOME" isOpen={isOpen} setIsOpen={setIsOpen} />
             <main className={`flex-1 p-8 transition-all duration-300 ${isOpen ? 'ml-64' : 'ml-0'}`}>
-                <h2 className='text-3xl font-semibold text-[#1f2937] mb-4'>
+                <h2 className='text-3xl font-semibold text-[#0b4d2a] mb-4'>
                     WELCOME
                 </h2>
                 <div style={{ display: 'flex', gap: 20 }}>
