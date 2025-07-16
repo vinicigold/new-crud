@@ -9,7 +9,6 @@ export default function AddEmployee() {
   const [ addemp, setaddemp] = useState({
     firstname:'',
     lastname:'',
-    username:'',
     age:'',
     phone:'',
     department:''
@@ -27,7 +26,6 @@ export default function AddEmployee() {
         ...addemp,
         firstname: addemp.firstname.toUpperCase(),
         lastname: addemp.lastname.toUpperCase(),
-        username: addemp.username.toUpperCase(),
         age: Number(addemp.age),
         phone: Number(addemp.phone),
         department: addemp.department.toUpperCase()
@@ -77,7 +75,7 @@ export default function AddEmployee() {
                 <div className='mb-4'>
                     <label className="block mb-2 text-[#0b4d2a]" htmlFor="age">Age</label>
                     <input type='text' id='age' name='age' placeholder='Enter your age' required onChange={handleChange}
-                    className='border p-2 rounded w-full max-w-s focus:ring-2 focus:ring-[#12664F]'>   
+                    className='border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#12664F]'>   
                         </input>
                 </div>
                 <div className='mb-4'>

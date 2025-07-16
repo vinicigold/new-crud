@@ -64,10 +64,9 @@ export default function SignInPage() {
     return (
         <div className="w-screen h-screen flex items-center justify-start bg-cover bg-center px-50"
         style={{ backgroundImage: `url('/backtest.jpg')` }}>
-            {/* <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start w-full max-w-md"> */}
-                {/* <form className='w-full bg-white p-6 rounded-lg shadow-md border bg-opacity-90'
-                    onSubmit={handlesubmit}> */}
-                    <div style={{ background: '#f9fafb'}} className=' p-8 rounded-lg shadow-md w-full max-w-sm'>
+            <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start w-full max-w-md">
+                <form style={{ background: '#f9fafb'}} className='p-8 rounded-lg shadow-md w-full max-w-sm' onSubmit={handlesubmit}>
+                    <div className=' '>
                         <h1 style={{ color: '#0b4d2a'}} className='text-3xl mb-4 text-center font-bold'>WELCOME</h1>
                         <div className="mb-4">
                             <label style={{ color: '#0b4d2a'}} className="block mb-2" htmlFor="username">Username</label>
@@ -81,7 +80,7 @@ export default function SignInPage() {
                             onChange={handlePassword} className='border border-gray-300 p-2 rounded w-full max-w-s'></input> 
                         </div>
                         <div className='mb-4 flex justify-center'>
-                            <button type='button' onClick={handlesubmit} className=' bg-[#0b4d2a] text-white p-2 rounded-4xl w-3xs max-w-s
+                            <button type='submit' className=' bg-[#0b4d2a] text-white p-2 rounded-4xl w-3xs max-w-s
                             hover:bg-green-800 transition duration-200'>Login</button>
                         </div>
                         <div className='text-center'>
@@ -89,8 +88,8 @@ export default function SignInPage() {
                             <button type='button' onClick={handleSignUp} style={{color: '#006666'}} className='hover:underline ml-1'>Create Account</button>
                         </div>
                     </div>
-                {/* </form> */}
-            {/* </main> */}
+                </form>
+            </main>
         </div>
     );
 }
