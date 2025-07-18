@@ -3,35 +3,30 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
- type User = {
-        id: number
-        firstname:string
-        lastname:string
-        age:number
-        phone:number
-        username:string
-        password:string
-    }
+type User = {
+    username:string
+    password:string
+}
 
 export default function SignInPage() {
 
     const router = useRouter();
-    const [userinfo, setuserinfo ] = useState<User[]>([])
+    const [userInfo, setUserInfo ] = useState<User[]>([])
 
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+    const [signIn, setSignIn] = useState ({
+        username:'',
+        password:''
+    })
+
     const [modal, setmodal] = useState(false)
 
-    const handleUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setUsername(e.target.value);
-    }
-
-    const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value);
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const{name,value} = e.target
+        setSignIn({...signIn, [name]:value})
     }
 
     const handleSignUp = () => {
-        router.push('/welcome/signup');
+        router.push('/welcome/signup')
     }
 
     useEffect(() => {
@@ -39,7 +34,7 @@ export default function SignInPage() {
             try {
                 const response = await fetch('http://localhost:3002/getusers')
                 const data = await response.json()
-                setuserinfo(data)
+                setUserInfo(data)
             }
             catch(error){
                 console.error('error', error)
@@ -49,24 +44,26 @@ export default function SignInPage() {
 
     },[])
 
-    const handlesubmit = (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
 
-        const user = userinfo.find(user => user.username === username)
+        const user = userInfo.find(user => user.username === signIn.username)
 
-        if (user && user.password === password){
+        if (user && user.password === signIn.password){
             router.push('/dashboard')
         }else{
             setmodal(true)
-            // alert('Invalid user or pass')
-            setUsername('')
-            setPassword('')
+            setSignIn({
+                username:'',
+                password:''
+            })
         }
     }
 
     const closemodal = () => {
         setmodal(false)
     }
+    console.log(userInfo)
 
     return (
         <div className='relative w-screen h-screen flex items-center justify-start bg-cover bg-center'>
@@ -74,19 +71,19 @@ export default function SignInPage() {
             style={{ backgroundImage: `url('/backtest.jpg')` }}>
                 <div className="relative z-10 w-full flex items-center justify-start pl-1 sm:pl-15">
                     <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start w-full max-w-sm">
-                    <form style={{ background: '#f9fafb'}} className='p-8 rounded-lg shadow-md w-full max-w-lg' onSubmit={handlesubmit}>
+                    <form style={{ background: '#f9fafb'}} className='p-8 rounded-lg shadow-md w-full max-w-lg' onSubmit={handleSubmit}>
                         <div className=' '>
                             <h1 style={{ color: '#0b4d2a'}} className='text-3xl mb-4 text-center font-bold'>LOGIN</h1>
                             <div className="mb-4">
                                 <label style={{ color: '#0b4d2a'}} className="block mb-2" htmlFor="username">Username</label>
-                                <input type='text' value={username} id='username' name='username' placeholder='Enter your username'
-                                onChange={handleUsername} className='border border-gray-300 p-2 rounded w-full'>   
+                                <input type='text' value={signIn.username} id='username' name='username' placeholder='Enter your username'
+                                onChange={handleChange} className='border border-gray-300 p-2 rounded w-full'>   
                                 </input>
                             </div>
                             <div className="mb-4">
                                 <label style={{ color: '#0b4d2a'}} className="block mb-2" htmlFor="password">Password</label>
-                                <input type='password' value={password} id='password' name='password' placeholder='Enter your password' required
-                                onChange={handlePassword} className='border border-gray-300 p-2 rounded w-full'></input> 
+                                <input type='password' value={signIn.password} id='password' name='password' placeholder='Enter your password' required
+                                onChange={handleChange} className='border border-gray-300 p-2 rounded w-full'></input> 
                             </div>
                             <div className='mb-4 flex justify-center'>
                                 <button type='submit' className=' bg-[#0b4d2a] text-white p-2 rounded-full w-full max-w-sm
@@ -112,5 +109,5 @@ export default function SignInPage() {
                 </div>
             )}
         </div>
-    );
+    )
 }

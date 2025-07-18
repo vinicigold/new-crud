@@ -4,7 +4,7 @@ import React, {useState} from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function SignUpPage() {
-  const router = useRouter();
+  const router = useRouter()
 
   const  allowLetters = (e: React.FormEvent<HTMLInputElement>) => {
     e.currentTarget.value = e.currentTarget.value.replace(/[^A-Za-z]/g, '')
@@ -27,7 +27,7 @@ export default function SignUpPage() {
     setsignup({...signup, [name]: value})
   }
 
-  const onPress = async(e: React.FormEvent) => {
+  const handleSubmit = async(e: React.FormEvent) => {
       e.preventDefault()
 
       const change = {
@@ -44,7 +44,7 @@ export default function SignUpPage() {
       })
 
       if (res.ok) {
-        console.log('Success:');
+        console.log('Success:')
         router.push('/welcome/signin')
       }else{
         alert('signup failed')
@@ -62,7 +62,7 @@ export default function SignUpPage() {
     <div className="w-screen h-screen flex items-center justify-start bg-cover bg-center px-50"
       style={{ backgroundImage: "url('/backtest.jpg')" }}>
         <form style={{ background: '#f9fafb'}} className="p-8 rounded-lg shadow-md w-full max-w-sm"
-        onSubmit={onPress}>
+        onSubmit={handleSubmit}>
           <div  className=''>
             <div className='mb-4 flex items-center justify-between'>
                 <button type='button' onClick={backBtn} className='hover:underline mb-4'>
@@ -112,7 +112,7 @@ export default function SignUpPage() {
                 className='border border-gray-300 p-2 rounded w-full max-w-s'></input> 
             </div>
             <div>
-                <button type='submit' onClick={onPress} className='bg-[#0b4d2a] text-white p-2 rounded-4xl w-full max-w-s
+                <button type='submit' className='bg-[#0b4d2a] text-white p-2 rounded-4xl w-full max-w-s
                 hover:bg-green-800 transition duration-200'>SUBMIT
             </button>
             </div> 

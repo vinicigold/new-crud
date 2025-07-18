@@ -27,10 +27,8 @@ const Nav: React.FC<NavProps> = ({ header, isOpen, setIsOpen }) => {
                 </aside>
             )}
             {isOpen && (
-                <aside
-                    onMouseLeave={() => setIsOpen(false)}
-                    style={{background: '#126544'}} className="fixed left-0 top-0 w-64 h-full bg-white shadow-md px-4 py-6 z-10"
-                >
+                <aside onMouseLeave={() => setIsOpen(false)}
+                    style={{background: '#126544'}} className="fixed left-0 top-0 w-64 h-full bg-white shadow-md px-4 py-6 z-10">
                     <h2 className="text-xl font-bold mb-6 text-[#ffffff]">{header}</h2>
                     <nav className="space-y-5">
                         <button className="text-[#e5e7eb] hover:text-[#0e3618] block" onClick={() => navigate('/dashboard')}>

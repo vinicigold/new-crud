@@ -12,8 +12,8 @@ type Employee = {
 }
 
 export default function Employee() {
-    const [empinfo, setempinfo] = useState<Employee[]>([])
-    const [edited , setedited] = useState({
+    const [empInfo, setEmpInfo] = useState<Employee[]>([])
+    const [empEdited , setEmpEdited] = useState({
         id: 0,
         firstname: "",
         lastname: "",
@@ -21,16 +21,16 @@ export default function Employee() {
         phone: 0,
         department: ""
     })
-    const [ addemp, setaddemp] = useState({
+    const [addemp, setaddemp] = useState({
         firstname:'',
         lastname:'',
         age:'',
         phone:'',
         department:''
-      })
+    })
     const [isOpen, setIsOpen] = useState(false)
-    const [edit, setEdit] = useState(false)
-    const [add, setadd] = useState(false)
+    const [editForm, setEditForm] = useState(false)
+    const [addForm, setAddForm] = useState(false)
 
     const  allowLetters = (e: React.FormEvent<HTMLInputElement>) => {
         e.currentTarget.value = e.currentTarget.value.replace(/[^A-Za-z]/g, '')
@@ -44,11 +44,11 @@ export default function Employee() {
         setaddemp({...addemp, [name]:value})
       }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const {name,value} = e.target
-        setedited({...edited, [name]:value})
+        setEmpEdited({...empEdited, [name]:value})
     }
-    const onPress = async(e: React.FormEvent) => {
+    const handleAddSubmit = async(e: React.FormEvent) => {
         e.preventDefault()
     
         const change = {
@@ -66,9 +66,12 @@ export default function Employee() {
                 headers: { 'Content-Type': 'application/json'},
                 body: JSON.stringify(change)
             })
+
+            const data = await res.json()
             if (res.ok) {
-                setadd(!add)
-                fetchEmp()
+                setEmpInfo((ademp) => [...ademp, data])
+                setAddForm(!addForm)
+                // fetchEmp()
         }else{
             alert('add employee failed')
         }
@@ -77,25 +80,36 @@ export default function Employee() {
         }   
       }
        console.log(addemp)
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleEditSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         const edemp = {
-        ...edited,
-        firstname: edited.firstname.toUpperCase(),
-        lastname: edited.lastname.toUpperCase(),
-        age: Number(edited.age),
-        phone: Number(edited.phone),
-        department: edited.department.toUpperCase()
-    }
+            ...empEdited,
+            firstname: empEdited.firstname.toUpperCase(),
+            lastname: empEdited.lastname.toUpperCase(),
+            age: Number(empEdited.age),
+            phone: Number(empEdited.phone),
+            department: empEdited.department.toUpperCase()
+        }
         try{
             const res = await fetch('http://localhost:3002/upemp', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json'},
                 body: JSON.stringify(edemp),
             })
+            const data = await res.json()
+            console.log(data)
+
             if(res.ok) {
-                setEdit(false)
-                fetchEmp()
+                const updateData = empInfo.map((emp) => {
+                    if (emp.id === empEdited.id){
+                        return data
+                    }else{
+                        return emp
+                    }
+                })
+                setEmpInfo(updateData)
+                setEditForm(false)
+                // fetchEmp()
             }else {
                 alert('edit employee failed')
             }
@@ -104,27 +118,26 @@ export default function Employee() {
         }
     }
 
-    const fetchEmp = async () => {
-            try {
-                const response = await fetch('http://localhost:3002/getemps')
-                const data = await response.json()
-                setempinfo(data)
-            } catch (error) {
-                console.error('error', error)
-            }
-        }
-
     useEffect(() => {
+        const fetchEmp = async () => {
+        try {
+            const response = await fetch('http://localhost:3002/getemps')
+            const data = await response.json()
+            setEmpInfo(data)
+        } catch (error) {
+            console.error('error', error)
+        }
+    }
         fetchEmp()
     }, [])
 
     const handleEditUser = (emp: Employee) => {
-       setEdit(true)
-       setadd(false)
-       setedited(emp)
+       setEditForm(true)
+       setAddForm(false)
+       setEmpEdited(emp)
     }   
-    console.log(edited)
-    const deleteuser = async (emp: Employee) => {
+    console.log(empEdited)
+    const handleDelUser = async (emp: Employee) => {
         try {
             const res = await fetch('http://localhost:3002/delemp', {
                 method: 'DELETE',
@@ -132,7 +145,8 @@ export default function Employee() {
                 body: JSON.stringify(emp),
             })
             if (res.ok) {
-                setempinfo(empinfo.filter((u) => u.id !== emp.id))
+                // fetchEmp()
+                setEmpInfo(empInfo.filter((u) => u.id !== emp.id))
             } else {
                 console.error('failed to delete user')
             }
@@ -141,20 +155,20 @@ export default function Employee() {
         }
     }
     const backBtn = () => {
-        setEdit(false)
-        setadd(false)
+        setEditForm(false)
+        setAddForm(false)
     }
 
     return (
     <div className="min-h-screen flex bg-[#f4f6f7]">
-        {!edit && !add &&
+        {!editForm && !addForm &&
         <>
             <Nav header="EMPLOYEE" isOpen={isOpen} setIsOpen={setIsOpen} />
                 <main className={`flex-1 p-8 transition-all duration-300 ${isOpen ? 'ml-64' : 'ml-0'}`}>
                     <form className='w-full bg-white p-4 rounded-lg shadow-md bg-opacity-90 mb-6'>
                         <div className="flex items-center justify-between">
                         <h2 className="text-3xl font-semibold text-[#0b4d2a]">EMPLOYEE INFORMATION</h2>
-                        <button type='button' className="text-[#e5e7eb] hover:bg-[#093e22] rounded bg-[#0b4d2a] px-4 py-2" onClick={() => setadd(true)}>
+                        <button type='button' className="text-[#e5e7eb] hover:bg-[#093e22] rounded bg-[#0b4d2a] px-4 py-2" onClick={() => setAddForm(true)}>
                             ADD EMPLOYEE
                         </button>
                         </div>
@@ -172,7 +186,7 @@ export default function Employee() {
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-[#d1d5db]">
-                                {empinfo.toSorted((a,b) => a.id - b.id).map((emp: Employee) => (
+                                {empInfo.toSorted((a,b) => a.id - b.id).map((emp: Employee) => (
                                     <tr key={emp.id} className="hover:bg-[#f1f5f9] transition duration-200 shadow-sm">
                                         <td className="px-4 py-2 text-sm text-gray-700">{emp.firstname}</td>
                                         <td className="px-4 py-2 text-sm text-gray-700">{emp.lastname}</td>
@@ -183,7 +197,7 @@ export default function Employee() {
                                             <button className="text-[#2563eb] hover:underline ml-2" onClick={() => handleEditUser(emp)}>
                                                 Edit
                                             </button>
-                                            <button className="text-[#dc2626] hover:underline ml-2" onClick={() => deleteuser(emp)}>
+                                            <button className="text-[#dc2626] hover:underline ml-2" onClick={() => handleDelUser(emp)}>
                                                 Delete
                                             </button>
                                         </td>
@@ -195,9 +209,9 @@ export default function Employee() {
                 </main>
             </>
         }
-        {add &&
+        {addForm &&
             <div className="min-h-screen w-full flex items-center justify-center bg-cover bg-center bg-no-repeat bg-[#12664F]">
-                <form className="w-full max-w-md bg-white p-6 rounded-lg shadow-md border bg-opacity-90 border-[#12664F]" onSubmit={onPress}>
+                <form className="w-full max-w-md bg-white p-6 rounded-lg shadow-md border bg-opacity-90 border-[#12664F]" onSubmit={handleAddSubmit}>
                     <div className='mb-4 flex items-center justify-between'>
                         <button type='button' onClick={backBtn} className='hover:underline mb-4'>←
                         </button>
@@ -245,10 +259,10 @@ export default function Employee() {
             </form>
         </div>
         }
-        {edit &&
+        {editForm &&
         <div className="min-h-screen w-full flex items-center justify-center bg-[#12664F]">
                 <form className="w-full max-w-md bg-white p-6 rounded-lg shadow-md border bg-opacity-90 border-[#12664F]"
-                    onSubmit={handleSubmit}>
+                    onSubmit={handleEditSubmit}>
                     <div className="mb-4 flex items-center justify-between">
                         <button type="button" onClick={backBtn} className="hover:underline mb-4">
                             ←
@@ -261,35 +275,35 @@ export default function Employee() {
                         <label className="block mb-2 text-[#0b4d2a]" htmlFor="firstname">
                             First Name
                         </label>
-                        <input type="text" id="firstname" name="firstname" placeholder="first name" required value={edited.firstname} onChange={handleChange}
+                        <input type="text" id="firstname" name="firstname" placeholder="first name" required value={empEdited.firstname} onChange={handleEditChange}
                         onInput={allowLetters} className="border p-2 rounded w-full focus:ring-2 focus:ring-[#12664F]"></input>
                     </div>
                     <div className="mb-4">
                         <label className="block mb-2 text-[#0b4d2a]" htmlFor="lastname">
                             Last Name
                         </label>
-                        <input type="text" id="lastname" name="lastname" placeholder="last name" required value={edited.lastname} onChange={handleChange}
+                        <input type="text" id="lastname" name="lastname" placeholder="last name" required value={empEdited.lastname} onChange={handleEditChange}
                         onInput={allowLetters} className="border p-2 rounded w-full focus:ring-2 focus:ring-[#12664F]"></input>
                     </div>
                     <div className="mb-4">
                         <label className="block mb-2 text-[#0b4d2a]" htmlFor="age">
                             Age
                         </label>
-                        <input type="text" id="age" name="age" placeholder="age" required value={edited.age} onChange={handleChange}
+                        <input type="text" id="age" name="age" placeholder="age" required value={empEdited.age} onChange={handleEditChange}
                         onInput={allowNum} className="border p-2 rounded w-full focus:ring-2 focus:ring-[#12664F]"></input>
                     </div>
                     <div className="mb-4">
                         <label className="block mb-2 text-[#0b4d2a]" htmlFor="phone">
                             Phone
                         </label>
-                        <input type="tel" id="phone" name="phone" placeholder="phone no." required value={edited.phone} onChange={handleChange}
+                        <input type="tel" id="phone" name="phone" placeholder="phone no." required value={empEdited.phone} onChange={handleEditChange}
                         onInput={allowNum} className="border p-2 rounded w-full focus:ring-2 focus:ring-[#12664F]"></input>
                     </div>
                     <div className="mb-4">
                         <label className="block mb-2 text-[#0b4d2a]" htmlFor="department">
                             Department
                         </label>
-                        <select id="department" name="department" required value={edited.department} onChange={handleChange}
+                        <select id="department" name="department" required value={empEdited.department} onChange={handleEditChange}
                             className="border p-2 rounded w-full focus:ring-2 focus:ring-[#12664F]">
                             <option value="">Select Department</option>
                             <option value="IT">IT</option>
