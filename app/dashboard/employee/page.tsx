@@ -71,7 +71,6 @@ export default function Employee() {
             if (res.ok) {
                 setEmpInfo((ademp) => [...ademp, data])
                 setAddForm(!addForm)
-                // fetchEmp()
         }else{
             alert('add employee failed')
         }
@@ -109,7 +108,6 @@ export default function Employee() {
                 })
                 setEmpInfo(updateData)
                 setEditForm(false)
-                // fetchEmp()
             }else {
                 alert('edit employee failed')
             }

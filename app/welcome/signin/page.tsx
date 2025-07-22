@@ -1,17 +1,11 @@
 'use client';
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-
-type User = {
-    username:string
-    password:string
-}
 
 export default function SignInPage() {
 
     const router = useRouter();
-    const [userInfo, setUserInfo ] = useState<User[]>([])
 
     const [signIn, setSignIn] = useState ({
         username:'',
@@ -29,41 +23,33 @@ export default function SignInPage() {
         router.push('/welcome/signup')
     }
 
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const response = await fetch('http://localhost:3002/getusers')
-                const data = await response.json()
-                setUserInfo(data)
-            }
-            catch(error){
-                console.error('error', error)
-            }
-        }
-        fetchUsers()
-
-    },[])
-
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
-        const user = userInfo.find(user => user.username === signIn.username)
-
-        if (user && user.password === signIn.password){
-            router.push('/dashboard')
-        }else{
-            setmodal(true)
-            setSignIn({
-                username:'',
-                password:''
+        try{
+            const res = await fetch('http://localhost:3002/Login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify(signIn)
             })
+            if(res.ok) {
+                router.push('/dashboard')
+            }else{
+                setmodal(true)
+                setSignIn({
+                    username:'',
+                    password:''
+                })
+            }
+        }catch(error){
+            console.error('error', error)
         }
     }
+    console.log(signIn)
 
     const closemodal = () => {
         setmodal(false)
     }
-    console.log(userInfo)
 
     return (
         <div className='relative w-screen h-screen flex items-center justify-start bg-cover bg-center'>

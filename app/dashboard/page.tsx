@@ -73,8 +73,8 @@ export default function Dashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-3   gap-6 items-start mb-6">
                     <div className="bg-white text-[#0b4d2a] p-6 rounded-lg shadow-md hover:shadow-xl transform hover:-translate-y-1 transition duration-300 ease-in-out md:col-span-2">
                         <h3 className="text-lg font-medium">Graph</h3>
-                        <div className="mt-4 h-80 bg-gray-100 rounded-2xl flex items-center justify-center">
-                            <Image src="/graph.png" alt="Graph" width={400} height={200} className='' />
+                        <div className="mt-4 h-80 bg-gray-100 rounded-2xl flex items-center justify-center relative">
+                            <Image src="/graph.png" alt="Graph" fill style={{ objectFit: 'contain' }} />
                         </div>
                     </div>
                     <div className="bg-white text-[#0b4d2a] p-6 rounded-lg shadow-md hover:shadow-xl transform hover:-translate-y-1 transition duration-300 ease-in-out">

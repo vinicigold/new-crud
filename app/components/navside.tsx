@@ -37,10 +37,10 @@ const Nav: React.FC<NavProps> = ({ header, isOpen, setIsOpen }) => {
                         <button className="text-[#e5e7eb] hover:text-[#0e3618] block" onClick={() => navigate('/dashboard/employee')}>
                             Employee
                         </button>
-                        <button className="text-[#e5e7eb] hover:text-[#0e3618] block" >
+                        <button className="text-[#e5e7eb] hover:text-[#0e3618] block" onClick={() => navigate('/dashboard/department')}>
                             Department
                         </button>
-                        <button className="text-[#e5e7eb] hover:text-[#0e3618] block">
+                        <button className="text-[#e5e7eb] hover:text-[#0e3618] block" onClick={() => navigate('/dashboard/pending')}>
                             Pending Task
                         </button>
                         <button className="text-[#dc2626] hover:text-[#0e3618] block" onClick={() => navigate('/welcome/signin')}>
